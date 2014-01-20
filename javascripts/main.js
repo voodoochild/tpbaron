@@ -22,7 +22,7 @@
           '<ul>'+
             '<li class="wider"><strong>Buy</strong><%= buy %></li>'+
             '<li class="wider"><strong>Sell</strong><%= sell %></li>'+
-            '<li class="wider"><strong>Spread</strong><%= spread %></li>'+
+            '<li class="wider"><strong>Spread</strong><%= spread %><%= percentage %></li>'+
             '<li><strong>Supply</strong><%= supply %></li>'+
             '<li><strong>Demand</strong><%= demand %></li>'+
           '</ul>'+
@@ -55,7 +55,9 @@
         success: function(data) {
           _.each(data.results, function(item) {
             var data = _.zipObject(itemKeys, item);
-            data.spread = monetise(Math.floor((data.sell * 0.85) - data.buy));
+            var spread = Math.floor((data.sell*0.85)-data.buy);
+            data.spread = monetise(spread);
+            data.percentage = (spread > 0) ? ' ('+Math.floor((spread/data.buy)*100)+'%)' : '';
             data.buy = monetise(data.buy);
             data.sell = monetise(data.sell);
             list.append(itemTemplate(data));
