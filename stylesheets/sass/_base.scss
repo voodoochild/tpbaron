@@ -2,13 +2,13 @@
 @import '../../components/normalize-scss/_normalize';
 
 // Colours
-$foreground: #333;
-$background: #fff;
-$highlight: #f0f;
+$foreground: #4e4e4e;
+$background: #fefefe;
+$highlight: #f31455;
 
 // Fonts
 $sans-serif: helvetica, arial, sans-serif;
-$serif: serif;
+$serif: "chaparral-pro", serif;
 
 // Media queries
 $mq-responsive: true;
@@ -19,3 +19,25 @@ $mq-breakpoints: (
 );
 
 @import '../../components/sass-mq/_mq';
+
+// Placeholders
+%unstyled-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+%media-object {
+  &, .bd {
+    overflow: hidden;
+  }
+
+  .img {
+    float: left;
+    margin-right: 0.5em;
+  }
+
+  .img img{
+    display: block;
+  }
+}

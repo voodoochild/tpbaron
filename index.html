@@ -4,21 +4,27 @@
   <meta charset="utf-8">
   <title>TP Baron</title>
   <link rel="stylesheet" href="stylesheets/css/main.css">
+  <link rel="stylesheet" href="components/components-font-awesome/css/font-awesome.min.css">
   <script type="text/javascript" data-main="javascripts/main" src="components/requirejs/require.js"></script>
+  <script type="text/javascript">
+    (function(d) {
+      var config = {
+        kitId: 'wer2pkj',
+        scriptTimeout: 3000
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
 </head>
 <body>
-  <h1>TP Baron</h1>
-<!--
-  Buy price, Sell price, Supply, Demand, Profit, remember only 85% of sell price is received after taxes and fees, round down
-  Look here (http://blacklionsprofit.com/advanced-guide-to-flipping) for what to put in default lists
-  e.g. http://api.gw2tp.com/1/items?ids=123,345&fields=name,buy,sell,supply,demand,img
-  Replace jQuery with RequireJS + libs
-  No auto–updating, no UI for creating/managing lists
-  Use grunt-contrib-copy to move vendor JS into javascripts/
--->
-  <article class="tp-list">
-    <h1>Chef ingredients</h1>
-    <ol data-items="123,456,789"></ol>
-  </article>
+  <main>
+    <header role="banner">
+      <h1>TP Baron</h1>
+    </header>
+    <article class="tp-list">
+      <h1>Chef ingredients <i class="toggle-list fa fa-angle-double-up"></i></h1>
+      <ol data-items="12135,12238,12241,12253,12341,12332,12532,12538,12511,12512,12258,12250,24359,24360"></ol>
+    </article>
+  </main>
 </body>
 </html>

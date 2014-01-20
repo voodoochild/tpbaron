@@ -4,34 +4,28 @@
   require.config({
     baseUrl: '../components',
     paths: {
-      domReady: 'requirejs-domready/domReady',
       lodash: 'lodash/dist/lodash.min',
-      reqwest: 'reqwest/reqwest',
-      bonzo: 'bonzo/bonzo.min',
-      qwery: 'qwery/qwery.min'
+      jquery: 'jquery/jquery.min'
     }
   });
 
-  require(['domReady!', 'lodash', 'bonzo', 'qwery', 'reqwest'],
+  require(['jquery', 'lodash'],
 
-  function(domReady, _, bonzo, qwery, reqwest) {
-    function $(selector) {
-      return bonzo(qwery(selector));
-    }
+  function($, _) {
 
     var itemKeys = ['id', 'name', 'buy', 'sell', 'supply', 'demand', 'img'];
     var itemTemplate = _.template(
       '<li class="item">'+
-        '<a href="http://www.gw2tp.com/item/<%= id %>" class="icon"><img src="<%= img %>" /></a>'+
-        '<div class="details">'+
-          '<a href="http://www.gw2tp.com/item/<%= id %>"><%= name %></a>'+
-          '<dl>'+
-            '<dt>Buy</dt><dd><%= buy %></dd>'+
-            '<dt>Sell</dt><dd><%= sell %></dd>'+
-            '<dt>Supply</dt><dd><%= supply %></dd>'+
-            '<dt>Demand</dt><dd><%= demand %></dd>'+
-            '<dt>Spread</dt><dd><%= spread %></dd>'+
-          '</dl>'+
+        '<a class="img" href="http://www.gw2tp.com/item/<%= id %>"><img src="<%= img %>" /></a>'+
+        '<div class="bd">'+
+          '<a class="name" href="http://www.gw2tp.com/item/<%= id %>"><%= name %></a>'+
+          '<ul>'+
+            '<li class="wider"><strong>Buy</strong><%= buy %></li>'+
+            '<li class="wider"><strong>Sell</strong><%= sell %></li>'+
+            '<li class="wider"><strong>Spread</strong><%= spread %></li>'+
+            '<li><strong>Supply</strong><%= supply %></li>'+
+            '<li><strong>Demand</strong><%= demand %></li>'+
+          '</ul>'+
         '</div>'+
       '</li>');
     var coins = {
@@ -41,7 +35,7 @@
     };
 
     function monetise(copper) {
-      copper = copper || 0;
+      if (copper <= 0) { return '<i class="fa fa-minus"></i>'; }
       var gold = Math.floor(copper / 10000);
       copper = copper % 10000;
       var silver = Math.floor(copper / 100);
@@ -55,10 +49,9 @@
     $('.tp-list ol').each(function() {
       var list = $(this);
       var items = list.data('items').split(',');
-      reqwest({
+      $.ajax({
         url: 'http://api.gw2tp.com/1/items?ids='+items.join()+'&fields=name,buy,sell,supply,demand,img',
-        type: 'json',
-        crossOrigin: true,
+        dataType: 'json',
         success: function(data) {
           _.each(data.results, function(item) {
             var data = _.zipObject(itemKeys, item);
@@ -69,6 +62,17 @@
           });
         }
       });
+    });
+
+    $('.toggle-list').on('click', function() {
+      var toggle = $(this);
+      if (toggle.hasClass('fa-angle-double-up')) {
+        toggle.parents('.tp-list').find('ol').slideUp(100);
+        $(this).removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+      } else {
+        toggle.parents('.tp-list').find('ol').slideDown(100);
+        $(this).removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+      }
     });
   });
 })();
