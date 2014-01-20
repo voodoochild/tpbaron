@@ -46,6 +46,9 @@
       return money.join(' ');
     }
 
+    // Rate limited to 3 API requests, so need to bundle them up into a single
+    // request and put the results into the relevant lists.
+
     $('.tp-list ol').each(function() {
       var list = $(this);
       var items = list.data('items').split(',');
@@ -55,6 +58,8 @@
         success: function(data) {
           _.each(data.results, function(item) {
             var data = _.zipObject(itemKeys, item);
+            data.buy = data.buy || 1;
+            data.sell = data.sell || 1;
             var spread = Math.floor((data.sell*0.85)-data.buy);
             data.spread = monetise(spread);
             data.percentage = (spread > 0) ? ' ('+Math.floor((spread/data.buy)*100)+'%)' : '';
@@ -69,12 +74,12 @@
     $('.toggle-list').on('click', function() {
       var toggle = $(this);
       if (toggle.hasClass('fa-angle-double-up')) {
-        toggle.parents('.tp-list').find('ol').slideUp(100);
+        toggle.parents('.tp-list').find('.tp-wrap').hide();
         $(this).removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
       } else {
-        toggle.parents('.tp-list').find('ol').slideDown(100);
+        toggle.parents('.tp-list').find('.tp-wrap').show();
         $(this).removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
       }
-    });
+    }).click();
   });
 })();

@@ -14,10 +14,23 @@ body {
 }
 
 main {
-  margin: 0 2em;
+  margin: 0 auto;
+  width: 868px;
+}
+
+#sitename {
+  text-transform: uppercase;
 }
 
 .tp-list {
+  h1 i {
+    margin-left: 0.5em;
+  }
+
+  .tp-wrap {
+    margin-left: 2em;
+  }
+
   ol {
     @extend %unstyled-list;
 
