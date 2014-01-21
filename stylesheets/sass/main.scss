@@ -15,7 +15,7 @@ body {
 
 main {
   margin: 0 auto;
-  width: 868px;
+  width: 898px;
 }
 
 #sitename {
@@ -56,6 +56,10 @@ main {
 
           &.wider {
             width: 160px;
+          }
+
+          &.widest {
+            width: 190px;
           }
 
           strong {
