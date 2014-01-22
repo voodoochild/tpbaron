@@ -19,11 +19,12 @@
         '<div class="bd">'+
           '<a class="name" href="http://www.gw2tp.com/item/<%= id %>"><%= name %></a>'+
           '<ul>'+
-            '<li class="wider"><strong>Buy</strong><%= buy %></li>'+
-            '<li class="wider"><strong>Sell</strong><%= sell %></li>'+
-            '<li class="widest"><strong>Spread</strong><%= spread %><%= percentage %></li>'+
-            '<li><strong>Supply</strong><%= supply %></li>'+
-            '<li><strong>Demand</strong><%= demand %></li>'+
+            '<li><strong>Buy</strong> <%= buy %></li>'+
+            '<li><strong>Sell</strong> <%= sell %></li>'+
+            '<li><strong>Spread</strong> <%= spread %></li>'+
+            '<li><strong>Profit</strong> <%= profit %></li>'+
+            '<li><strong>Supply</strong> <%= supply %></li>'+
+            '<li><strong>Demand</strong> <%= demand %></li>'+
           '</ul>'+
         '</div>'+
       '</li>');
@@ -87,11 +88,18 @@
         _($(this).data('items').split(',')).each(function(id) {
           item = itemLookup[id];
           if (item) {
-            item.buy = item.buy || 1;
-            item.sell = item.sell || 1;
+            item.buy = item.buy;
+            item.sell = item.sell;
+            if (item.buy <= 0 || item.sell <= 0) { return; }
             var spread = Math.floor((item.sell * 0.85) - item.buy);
             item.spread = monetise(spread);
-            item.percentage = (spread !== 0) ? ' ('+Math.floor((spread / item.buy) * 100)+'%)' : '';
+            if (spread === 0) {
+              item.profit = '0%';
+            } else if (spread > 0) {
+              item.profit = '<span class="positive">'+Math.floor((spread / item.buy) * 100)+'%</span>';
+            } else if (spread < 0) {
+              item.profit = '<span class="negative">'+Math.floor((spread / item.buy) * 100)+'%</span>';
+            }
             item.buy = monetise(item.buy);
             item.sell = monetise(item.sell);
             $(this).append(itemTemplate(item));

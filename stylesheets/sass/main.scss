@@ -14,8 +14,8 @@ body {
 }
 
 main {
-  margin: 0 auto;
-  width: 898px;
+  margin-left: 10em;
+  width: 988px;
 }
 
 #sitename {
@@ -28,6 +28,7 @@ main {
   }
 
   .tp-wrap {
+    display: none;
     margin-left: 2em;
   }
 
@@ -54,16 +55,8 @@ main {
           display: inline-block;
           width: 150px;
 
-          &.wider {
-            width: 160px;
-          }
-
-          &.widest {
-            width: 190px;
-          }
-
           strong {
-            margin-right: 0.5em;
+            margin-right: 1em;
           }
 
           img {
